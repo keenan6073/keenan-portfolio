@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Keenan Heinz — Mechanical Engineering Portfolio</title>
 <meta name="description" content="Mechanical engineering portfolio of Keenan Heinz, University of Pennsylvania.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --page-bg: #F1FAEE;      /* Honeydew — off-white outer canvas */
@@ -27,7 +30,7 @@
     margin: 0;
     background: var(--page-bg);
     color: var(--blue-dark);
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
     line-height: 1.55;
     -webkit-font-smoothing: antialiased;
   }
@@ -37,30 +40,6 @@
   a:focus-visible, button:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
 
   img { max-width: 100%; display: block; border-radius: 12px; }
-
-  /* ---------- fixed brand mark ---------- */
-  .brand {
-    position: fixed; top: 22px; left: 50%;
-    transform: translateX(calc(-1 * var(--maxw) / 2));
-    font-size: 13px; font-weight: 700; letter-spacing: 0.08em;
-    color: var(--blue); z-index: 40;
-  }
-  @media (max-width: 780px) {
-    .brand { left: 24px; transform: none; }
-  }
-
-  /* ---------- side dot nav ---------- */
-  .dotnav {
-    position: fixed; right: 28px; top: 50%; transform: translateY(-50%);
-    display: flex; flex-direction: column; gap: 14px; z-index: 40;
-  }
-  .dotnav button {
-    width: 9px; height: 9px; border-radius: 50%;
-    background: transparent; border: 1.5px solid var(--blue);
-    padding: 0; cursor: pointer; transition: background 0.25s, transform 0.25s;
-  }
-  .dotnav button.active { background: var(--blue); transform: scale(1.25); }
-  @media (max-width: 900px) { .dotnav { display: none; } }
 
   /* ---------- scroll container ---------- */
   main {
@@ -135,7 +114,7 @@
   /* ---------- project sections ---------- */
   h2 {
     margin: 0 0 4px; font-size: 22px; font-weight: 700;
-    letter-spacing: 0.01em; color: var(--blue); text-transform: uppercase;
+    letter-spacing: 0.01em; color: var(--red); text-transform: uppercase;
   }
   .meta { margin: 0 0 16px; color: var(--blue); font-size: 13px; opacity: 0.8; }
 
@@ -169,20 +148,6 @@
 </style>
 </head>
 <body>
-
-<div class="brand">KEENAN HEINZ</div>
-
-<nav class="dotnav" id="dotnav" aria-label="Section navigation">
-  <button data-target="top" aria-label="About"></button>
-  <button data-target="stealth" aria-label="Automated Test Instrumentation"></button>
-  <button data-target="coil-winder" aria-label="Coil Winding System"></button>
-  <button data-target="no-diggity" aria-label="No-Diggity V3 Launch Structure"></button>
-  <button data-target="ball-launcher" aria-label="Styrofoam Ball Launcher"></button>
-  <button data-target="lighthouse" aria-label="Lighthouse Lamp"></button>
-  <button data-target="toy" aria-label="Toy Dissection"></button>
-  <button data-target="plotting" aria-label="Plotting and Coding"></button>
-  <button data-target="contact" aria-label="Contact"></button>
-</nav>
 
 <main>
 
@@ -333,31 +298,6 @@
 </main>
 
 <script>
-  // dot nav: click to scroll, highlight active section on scroll
-  var sections = Array.from(document.querySelectorAll('main section'));
-  var dots = Array.from(document.querySelectorAll('#dotnav button'));
-
-  dots.forEach(function (dot) {
-    dot.addEventListener('click', function () {
-      var target = document.getElementById(dot.dataset.target);
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
-    });
-  });
-
-  if ('IntersectionObserver' in window) {
-    var navObs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          var id = entry.target.id;
-          dots.forEach(function (d) {
-            d.classList.toggle('active', d.dataset.target === id);
-          });
-        }
-      });
-    }, { threshold: 0.5 });
-    sections.forEach(function (s) { navObs.observe(s); });
-  }
-
   // scroll reveal — progressive enhancement only; content is visible by
   // default in CSS, so if this fails, nothing is ever hidden.
   if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
