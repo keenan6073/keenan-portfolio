@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keenan Heinz — Mechanical Engineering Portfolio</title>
+<meta name="description" content="Mechanical engineering portfolio of Keenan Heinz, University of Pennsylvania.">
+<style>
+  :root {
+    --page-bg: #F1FAEE;      /* Honeydew — off-white outer canvas */
+    --card-bg: #FFFFFF;      /* white card surface */
+    --card-border: #A8DADC;  /* Frosted Blue — card border / dividers */
+    --red: #E63946;          /* Strawberry Red — the one big title */
+    --blue: #457B9D;         /* Steel Blue — headers, meta, bullets */
+    --blue-dark: #1D3557;    /* Deep Space Blue — main body text */
+    --maxw: 720px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation: none !important; transition: none !important; }
+  }
+
+  body {
+    margin: 0;
+    background: var(--page-bg);
+    color: var(--blue-dark);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--red); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+
+  img { max-width: 100%; display: block; border-radius: 12px; }
+
+  /* ---------- fixed brand mark ---------- */
+  .brand {
+    position: fixed; top: 22px; left: 50%;
+    transform: translateX(calc(-1 * var(--maxw) / 2));
+    font-size: 13px; font-weight: 700; letter-spacing: 0.08em;
+    color: var(--blue); z-index: 40;
+  }
+  @media (max-width: 780px) {
+    .brand { left: 24px; transform: none; }
+  }
+
+  /* ---------- side dot nav ---------- */
+  .dotnav {
+    position: fixed; right: 28px; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 14px; z-index: 40;
+  }
+  .dotnav button {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: transparent; border: 1.5px solid var(--blue);
+    padding: 0; cursor: pointer; transition: background 0.25s, transform 0.25s;
+  }
+  .dotnav button.active { background: var(--blue); transform: scale(1.25); }
+  @media (max-width: 900px) { .dotnav { display: none; } }
+
+  /* ---------- scroll container ---------- */
+  main {
+    scroll-snap-type: y proximity;
+  }
+
+  section {
+    scroll-snap-align: start;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 96px 24px;
+  }
+
+  .card {
+    max-width: var(--maxw);
+    width: 100%;
+    margin: 0 auto;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 22px;
+    padding: 48px 44px;
+    box-shadow: 0 12px 32px rgba(29,53,87,0.08);
+  }
+
+  @media (max-width: 560px) {
+    .card { padding: 36px 26px; }
+    section { padding: 72px 16px; }
+  }
+
+  /* ---------- hero ---------- */
+  .hero-photo {
+    width: 148px; height: 148px; border-radius: 50%;
+    object-fit: cover; margin: 0 auto 24px;
+  }
+  .hero .card { text-align: center; }
+
+  h1 {
+    margin: 0 0 6px; font-size: 30px; font-weight: 700;
+    letter-spacing: 0.02em; color: var(--red); text-transform: uppercase;
+  }
+  .subtitle { margin: 0 0 22px; color: var(--blue); font-size: 14px; }
+  .lead { font-size: 16px; color: var(--blue-dark); margin: 0 0 22px; }
+  .hero .lead { max-width: 46ch; margin-left: auto; margin-right: auto; }
+
+  .taglist, .bullets {
+    list-style: none; margin: 0 0 8px; padding: 0; text-align: left;
+  }
+  .hero .taglist { display: inline-block; text-align: left; }
+  .taglist li, .bullets li {
+    position: relative; padding-left: 18px; margin-bottom: 9px;
+    font-size: 15px; color: var(--blue-dark);
+  }
+  .taglist li::before, .bullets li::before {
+    content: "•"; position: absolute; left: 0; color: var(--blue);
+  }
+  .bullets li.emph { font-weight: 700; color: var(--blue); }
+
+  .contact-line { font-size: 13px; color: var(--blue); margin-top: 22px; }
+  .contact-line a { color: var(--red); }
+  .dot-sep { margin: 0 8px; color: var(--blue); }
+
+  .resume-btn {
+    display: inline-block; margin-top: 6px;
+    padding: 10px 22px; border-radius: 999px;
+    background: var(--red); color: #FFFFFF !important;
+    font-size: 14px; font-weight: 700; letter-spacing: 0.02em;
+    text-decoration: none !important;
+  }
+  .resume-btn:hover { opacity: 0.88; }
+
+  /* ---------- project sections ---------- */
+  h2 {
+    margin: 0 0 4px; font-size: 22px; font-weight: 700;
+    letter-spacing: 0.01em; color: var(--blue); text-transform: uppercase;
+  }
+  .meta { margin: 0 0 16px; color: var(--blue); font-size: 13px; opacity: 0.8; }
+
+  .project-media {
+    display: flex; gap: 14px; margin-top: 24px; flex-wrap: wrap;
+  }
+  .project-media img { flex: 1 1 0; min-width: 140px; }
+  .project-media.single img { flex: 1 1 100%; }
+
+  .placeholder {
+    flex: 1 1 0; min-width: 140px; aspect-ratio: 4 / 3;
+    border: 1.5px dashed var(--card-border);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 12px;
+    background: rgba(168, 218, 220, 0.12);
+    color: var(--blue); font-size: 13px;
+  }
+
+  /* ---------- footer / contact section ---------- */
+  .footer-card { text-align: center; }
+  .footer-card h2 { margin-bottom: 18px; }
+  .notes {
+    margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--card-border);
+    font-size: 13px; color: var(--blue); text-align: left;
+  }
+
+  /* progressive-enhancement reveal (never hides content by default) */
+  .reveal.pending { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.pending.in { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="brand">KEENAN HEINZ</div>
+
+<nav class="dotnav" id="dotnav" aria-label="Section navigation">
+  <button data-target="top" aria-label="About"></button>
+  <button data-target="stealth" aria-label="Automated Test Instrumentation"></button>
+  <button data-target="coil-winder" aria-label="Coil Winding System"></button>
+  <button data-target="no-diggity" aria-label="No-Diggity V3 Launch Structure"></button>
+  <button data-target="ball-launcher" aria-label="Styrofoam Ball Launcher"></button>
+  <button data-target="lighthouse" aria-label="Lighthouse Lamp"></button>
+  <button data-target="toy" aria-label="Toy Dissection"></button>
+  <button data-target="plotting" aria-label="Plotting and Coding"></button>
+  <button data-target="contact" aria-label="Contact"></button>
+</nav>
+
+<main>
+
+  <section class="hero" id="top">
+    <div class="card reveal">
+      <img class="hero-photo" src="images/headshot.jpg" alt="Portrait of Keenan Heinz">
+      <h1>Keenan Heinz</h1>
+      <p class="subtitle">Mechanical Engineering, University of Pennsylvania, Class of 2028</p>
+      <p class="lead">Mechanical engineering student and D1 athlete at the University of Pennsylvania.</p>
+      <ul class="taglist">
+        <li>Intended concentration in Structures and Materials</li>
+        <li>First-principles-based methodology</li>
+        <li>World Championship medalist</li>
+        <li>Multiple-time IRA National Championship appearances</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="stealth">
+    <div class="card reveal">
+      <h2>Automated Test Instrumentation</h2>
+      <p class="meta">Stealth Startup, Mechanical Engineering Intern</p>
+      <p class="lead">Owned mechanical, electrical, and software scope for a fleet of automated test rigs at a stealth startup, from design criteria through fabrication-ready documentation.</p>
+      <ul class="bullets">
+        <li>Fastener and structural calculations to a 2.0 yield safety factor</li>
+        <li>Wiring and control stacks: STM32, ADC, load cells</li>
+        <li>SPI-based DAQ software</li>
+        <li>Non-contact optical extensometer design and integration</li>
+        <li class="emph">500+ line design spreadsheets: criteria, BOMs, hand calculations</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="coil-winder">
+    <div class="card reveal">
+      <h2>Coil Winding System</h2>
+      <p class="meta">Stealth Startup, Mechanical Engineering Intern</p>
+      <p class="lead">Designing custom bobbins, a tensioning system, and HMI-integrated software for an ITC-PLC-70 coil winding machine, with test winding to validate scalability for future production.</p>
+      <ul class="bullets">
+        <li>Custom bobbin design</li>
+        <li>Tensioning system design</li>
+        <li class="emph">Software linking coil requirement parameters to the machine's HMI settings</li>
+        <li>Test winding to validate scalability for future production</li>
+      </ul>
+      <div class="project-media">
+        <div class="placeholder">Photo coming soon</div>
+        <div class="placeholder">Photo coming soon</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="no-diggity">
+    <div class="card reveal">
+      <h2>No-Diggity V3 Launch Structure</h2>
+      <p class="meta">Penn Hyperloop, Co-Lead Engineer</p>
+      <p class="lead">Engineered and fabricated the A36 steel launch structure for Penn Hyperloop's tunnel boring machine, from hand calculations through final weld.</p>
+      <ul class="bullets">
+        <li class="emph">Rated for 2,500+ N vertical, 2.7+ kN torque</li>
+        <li>Structural hand calculations</li>
+        <li>Fully MIG-welded by hand</li>
+      </ul>
+      <div class="project-media">
+        <img src="images/no-diggity-photo.png" alt="No-Diggity V3 launch structure in the field">
+        <img src="images/no-diggity-cad.png" alt="CAD model of the launch structure">
+      </div>
+    </div>
+  </section>
+
+  <section id="ball-launcher">
+    <div class="card reveal">
+      <h2>Styrofoam Ball Launcher</h2>
+      <p class="meta">Independent Project</p>
+      <p class="lead">Built an adjustable rubber-band-powered ball launcher, and the physics model to predict how it would behave.</p>
+      <ul class="bullets">
+        <li>Variable distance, height, and ball mass</li>
+        <li class="emph">Kinematics and energy model, including drag and losses</li>
+        <li>Calibrated against test data</li>
+      </ul>
+      <div class="project-media">
+        <img src="images/ball-launcher-photo.png" alt="Styrofoam ball launcher build">
+        <img src="images/ball-launcher-plot.png" alt="Trajectory model plot">
+      </div>
+    </div>
+  </section>
+
+  <section id="lighthouse">
+    <div class="card reveal">
+      <h2>Lighthouse Lamp</h2>
+      <p class="meta">Independent Project</p>
+      <p class="lead">Rapid-prototyped a lighthouse structure using groove-and-alignment joints instead of glue or fasteners.</p>
+      <ul class="bullets">
+        <li class="emph">No permanent joints or fasteners</li>
+        <li>CR2032 tilt-switch circuit, wired to a 10mm LED</li>
+      </ul>
+      <div class="project-media">
+        <img src="images/lighthouse-exploded.png" alt="Exploded CAD view of the lighthouse lamp">
+        <img src="images/lighthouse-assembled.png" alt="Assembled lighthouse lamp">
+      </div>
+    </div>
+  </section>
+
+  <section id="toy">
+    <div class="card reveal">
+      <h2>Toy Dissection</h2>
+      <p class="meta">Independent Project</p>
+      <p class="lead">Measured and reverse-engineered a small spinning toy into an accurate CAD model.</p>
+      <ul class="bullets">
+        <li>Precise physical measurement</li>
+        <li>Dimensional accuracy, part-to-part alignment</li>
+        <li class="emph">Exploded views and technical drawings</li>
+      </ul>
+      <div class="project-media">
+        <img src="images/toy-real.png" alt="Original toy, a small orange crab">
+        <img src="images/toy-cad-exploded.png" alt="Exploded CAD reconstruction of the toy">
+      </div>
+    </div>
+  </section>
+
+  <section id="plotting">
+    <div class="card reveal">
+      <h2>Plotting and Coding</h2>
+      <p class="meta">Independent Projects</p>
+      <p class="lead">Wrote automation scripts and simulation tools that became direct building blocks for later DAQ software work.</p>
+      <ul class="bullets">
+        <li>Materials and thermal data: automation and visualization</li>
+        <li class="emph">Rigid-body dynamics via high-order ODE integration</li>
+        <li>Real-time multi-body visualizer</li>
+      </ul>
+      <div class="project-media">
+        <img src="images/ode-visualization.png" alt="Real-time rigid body dynamics visualizer">
+        <img src="images/materials-plot.png" alt="Stress-strain materials plot">
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="card reveal footer-card">
+      <h2>Get in Touch</h2>
+      <a class="resume-btn" href="Keenan-Heinz-Resume.pdf" target="_blank" rel="noopener">Download Resume</a>
+      <p class="contact-line">
+        <a href="mailto:keenan6073@gmail.com">keenan6073@gmail.com</a>
+        <span class="dot-sep">|</span>(925) 528-8095
+        <span class="dot-sep">|</span><a href="https://linkedin.com/in/keenan-heinz">linkedin.com/in/keenan-heinz</a>
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // dot nav: click to scroll, highlight active section on scroll
+  var sections = Array.from(document.querySelectorAll('main section'));
+  var dots = Array.from(document.querySelectorAll('#dotnav button'));
+
+  dots.forEach(function (dot) {
+    dot.addEventListener('click', function () {
+      var target = document.getElementById(dot.dataset.target);
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var navObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.id;
+          dots.forEach(function (d) {
+            d.classList.toggle('active', d.dataset.target === id);
+          });
+        }
+      });
+    }, { threshold: 0.5 });
+    sections.forEach(function (s) { navObs.observe(s); });
+  }
+
+  // scroll reveal — progressive enhancement only; content is visible by
+  // default in CSS, so if this fails, nothing is ever hidden.
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var reveals = document.querySelectorAll('.reveal');
+    reveals.forEach(function (el) { el.classList.add('pending'); });
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    reveals.forEach(function (el) { obs.observe(el); });
+  }
+</script>
+
+</body>
+</html>
